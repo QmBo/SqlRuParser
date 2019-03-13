@@ -3,6 +3,7 @@ package ru.job4j.parser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.*;
 import java.sql.*;
 import java.util.Map;
 
@@ -17,7 +18,35 @@ public class DataBaseWork {
         this.connection = connection;
         this.vacancy = vacancy;
         this.decryption = decryption;
+        this.init();
         this.dbWork();
+    }
+
+    private void init() {
+        try (Statement st = connection.createStatement()) {
+            ResultSet rs = st.executeQuery("show tables like 'vacancy'");
+            boolean exist = false;
+            while (rs.next()) {
+                exist = true;
+            }
+            if (!exist) {
+                try (
+                        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(
+                                        getClass().getClassLoader().getResourceAsStream("db_create.sql")
+                                )
+                        )
+                ) {
+                    String line = in.readLine();
+                    while (line != null) {
+                        st.executeUpdate(line);
+                        line = in.readLine();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
     }
 
     /**

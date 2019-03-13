@@ -107,8 +107,8 @@ public class VacancyParser {
                 String link = e.select("a[href]").get(0).attr("href");
                 LOG.debug(name);
                 LOG.debug(e.select("a[href]").get(0).attr("href"));
-                if (name.length() > 3999) {
-                    name = format("%s %s", name.substring(0, 3990), "...");
+                if (name.length() > 999) {
+                    name = format("%s %s", name.substring(0, 990), "...");
                 }
                 this.checkVacancy(name, link);
             }
