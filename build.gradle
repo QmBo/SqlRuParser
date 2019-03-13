@@ -3,6 +3,8 @@ plugins {
     id 'checkstyle'
 }
 
+apply plugin: "java"
+
 group 'SqlRuParser'
 version '1.0-SNAPSHOT'
 
@@ -23,4 +25,8 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
 
+}
+
+configurations {
+    jar.archiveName = 'SqlRuParser.jar'
 }

@@ -2,6 +2,7 @@
 .idea
 ### Java ###
 *.class
+out
 
 # BlueJ files
 *.ctxt
